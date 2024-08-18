@@ -14,7 +14,7 @@ class CategoriesForm extends Form
      */
     public ?Category $category;
 
-    #[Validate('required|min:5', as: 'nome')]
+    #[Validate('required|min:5|unique:categories', as: 'nome')]
     /**
      *
      * @var string
@@ -30,7 +30,7 @@ class CategoriesForm extends Form
     public function store()
     {
         $this->validate();
-        dd($this->all());
+        Category::create($this->only(['name']));
     }
 
     /**

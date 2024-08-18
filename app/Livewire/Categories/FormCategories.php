@@ -13,6 +13,9 @@ class FormCategories extends Component
     public function save()
     {
         $this->categoriesForm->store();
+
+        $this->categoriesForm->reset();
+        $this->dispatch('close');
     }
 
     public function render()
