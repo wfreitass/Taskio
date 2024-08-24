@@ -12,7 +12,7 @@ class CategoriesForm extends Form
      *
      * @var Category|null
      */
-    public ?Category $category;
+    public ?Category $category = null;
 
     #[Validate('required|min:5|unique:categories', as: 'nome')]
     /**
@@ -35,7 +35,7 @@ class CategoriesForm extends Form
 
     /**
      *
-     * @return [type]
+     * @return void
      * 
      */
     public function update()
@@ -52,10 +52,10 @@ class CategoriesForm extends Form
      *
      * @param Category $category
      * 
-     * @return [type]
+     * @return void
      * 
      */
-    public function setPost(Category $category)
+    public function setCategory(Category $category)
     {
         $this->category = $category;
 
