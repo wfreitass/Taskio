@@ -66,8 +66,8 @@ final class CategoryTable extends PowerGridComponent
             Column::make('Created at', 'created_at')
                 ->hidden(),
 
-            Column::make('Dt_criação', 'created_at_formatted', 'created_at')
-                ->searchable(),
+            Column::make('Dt_criação', 'created_at_formatted', 'created_at'),
+            // ->searchable(),
 
             Column::action('Ações')
         ];
@@ -76,8 +76,8 @@ final class CategoryTable extends PowerGridComponent
     public function filters(): array
     {
         return [
-            Filter::inputText('name'),
-            Filter::datepicker('created_at_formatted', 'created_at'),
+            // Filter::inputText('name'),
+            // Filter::datepicker('created_at_formatted', 'created_at'),
         ];
     }
 
@@ -98,12 +98,12 @@ final class CategoryTable extends PowerGridComponent
     {
         return [
             Button::add('edit')
-                ->slot('Edit: ' . $row->id)
+                ->slot('Editar')
                 ->id()
                 ->class('pg-btn-white dark:ring-pg-primary-600 dark:border-pg-primary-600 dark:hover:bg-pg-primary-700 dark:ring-offset-pg-primary-800 dark:text-pg-primary-300 dark:bg-pg-primary-700')
                 ->dispatch('edit', ['category' => $row->id]),
             Button::add('delete')
-                ->slot('delete: ' . $row->id)
+                ->slot('Deletar')
                 ->id()
                 ->class('pg-btn-white dark:ring-pg-primary-600 dark:border-pg-primary-600 dark:hover:bg-pg-primary-700 dark:ring-offset-pg-primary-800 dark:text-pg-primary-300 dark:bg-pg-primary-700')
                 ->dispatch('delete', ['category' => $row->id])

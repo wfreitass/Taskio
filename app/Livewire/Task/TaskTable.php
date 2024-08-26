@@ -20,12 +20,12 @@ final class TaskTable extends PowerGridComponent
 {
     public function setUp(): array
     {
-        $this->showCheckBox();
+        // $this->showCheckBox();
 
         return [
-            Exportable::make('export')
-                ->striped()
-                ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
+            // Exportable::make('export')
+            //     ->striped()
+            //     ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
             Header::make()->showSearchInput(),
             Footer::make()
                 ->showPerPage()
@@ -55,42 +55,59 @@ final class TaskTable extends PowerGridComponent
                 ->searchable()
                 ->sortable(),
 
-            Column::make('Name', 'name')
+            Column::make('Nome', 'name')
                 ->searchable()
                 ->sortable(),
 
-            Column::make('Created at', 'created_at')
-                ->hidden(),
+            // Column::make('dt_criação', 'created_at')
+            //     ->hidden(),
 
-            Column::make('Created at', 'created_at_formatted', 'created_at')
+            Column::make('dt_criação', 'created_at_formatted', 'created_at')
                 ->searchable(),
 
-            Column::action('Action')
+            Column::action('Ações')
         ];
     }
 
     public function filters(): array
     {
         return [
-            Filter::inputText('name'),
+            // Filter::inputText('name'),
             // Filter::datepicker('created_at_formatted', 'created_at'),
         ];
     }
 
     #[\Livewire\Attributes\On('edit')]
-    public function edit($rowId): void
+    public function edit(Task $task): void
     {
-        $this->js('alert(' . $rowId . ')');
+        $this->dispatch('openEditModal',  $task);
     }
+
+    #[\Livewire\Attributes\On('delete')]
+    public function delete(Task $task): void
+    {
+        $task->delete();
+    }
+
 
     public function actions(Task $row): array
     {
         return [
             Button::add('edit')
-                ->slot('Edit: ' . $row->id)
+                ->slot('Editar')
                 ->id()
                 ->class('pg-btn-white dark:ring-pg-primary-600 dark:border-pg-primary-600 dark:hover:bg-pg-primary-700 dark:ring-offset-pg-primary-800 dark:text-pg-primary-300 dark:bg-pg-primary-700')
-                ->dispatch('edit', ['rowId' => $row->id])
+                ->dispatch('edit', ['task' => $row->id]),
+            Button::add('viewTaskModal')
+                ->slot('ver')
+                ->id()
+                ->class('pg-btn-white dark:ring-pg-primary-600 dark:border-pg-primary-600 dark:hover:bg-pg-primary-700 dark:ring-offset-pg-primary-800 dark:text-pg-primary-300 dark:bg-pg-primary-700')
+                ->dispatch('viewTaskModal', ['task' => $row->id]),
+            Button::add('delete')
+                ->slot('deletar')
+                ->id()
+                ->class('pg-btn-white dark:ring-pg-primary-600 dark:border-pg-primary-600 dark:hover:bg-pg-primary-700 dark:ring-offset-pg-primary-800 dark:text-pg-primary-300 dark:bg-pg-primary-700')
+                ->dispatch('delete', ['task' => $row->id])
         ];
     }
 

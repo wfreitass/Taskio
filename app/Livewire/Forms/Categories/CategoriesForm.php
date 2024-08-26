@@ -19,13 +19,13 @@ class CategoriesForm extends Form
      *
      * @var string
      */
-    public $name = '';
+    public string $name = '';
 
     /**
      *
      * @var bool
      */
-    public $active = true;
+    public bool $active = true;
 
     public function store()
     {
